@@ -22,9 +22,6 @@ public:
 };
 
 
-void FileToStudent(std::string);
-
-
 class CSVHandler
 {
 private:

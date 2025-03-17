@@ -5,6 +5,9 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <fstream>
+#include <chrono>
+#include <thread>
 
 
 class Expression
@@ -242,13 +245,152 @@ void Expression::addConst(int constanta)
 
 int main() {
 	setlocale(LC_ALL, "Russian");
+	for (int i = 0; i <= 100; i += 1) {
+		std::cout << "\rЗагрузка: " << i << "%";
+		std::cout.flush();
+		std::this_thread::sleep_for(std::chrono::milliseconds(15));
+	}
+	system("cls");
+	std::cout << "-Редактор выражений-\n\n";
+	std::cout << "Введите имя файла для работы(с расширением):" << std::endl;
+	
+	short flag1;
+	std::string filename;
+	std::string type;
+	std::string expression;
+	
+	std::cin >> filename;
+	
+	std::ifstream ss(filename);
+	std::string line;
 
-	std::string a = "(x+5)(x-4)(x+7)(x-8)(x+9)";
+	int i = 0;
+	std::vector<int> constants = {0};
+	
+	while (std::getline(ss, line))
+	{
+		if (i == 0)
+		{
+			type = line;
+		}
+		else if (i == 1)
+		{
+			expression = line;
+		}
+		
+		i += 1;
+	}
+	
+	std::cout << "\n\n";
+	std::cout << "Прочитанные данные" << std::endl;
+	std::cout << "Тип выражения: " << type << std::endl;
+	std::cout << "Выражение: " << expression << std::endl;
+	std::cout << "\n\n\nВведите '1', если желаете перейти к редактированию, и '0', если выйти: ...";
+	std::cin >> flag1;
+	if (flag1 == 1)
+	{
+		while (true) {
+
+		
+			system("cls");
+			std::cout << "Окно редактирования:\n\n\n\n";
+			std::cout << "Выберете один из пунктов и введите его цифру:\n\n";
+			std::cout << "1) Показать введенные дынные" << std::endl;
+			std::cout << "2) Добавить константу" << std::endl;
+			std::cout << "3) Перейти к результату упрощения выражения" << std::endl;
+			std::cout << "4) Окончание работы программы" << std::endl;
+				
+			short flag2;
+			std::cout << "Ввод: ";
+			std::cin >> flag2;
+
+			if (flag2 == 1)
+			{
+				std::string flag3;
+				system("cls");
+				std::cout << "Тип выражения: " << type << std::endl;
+				std::cout << "Выражение: " << expression << std::endl;
+				std::cout << "\n\nДля выхода введите любой символ: ";
+				std::cin >> flag3;
+			}
+
+			if (flag2 == 2)
+			{
+				int c;
+				std::string flag4;
+				system("cls");
+				std::cout << "Введите константу:\n";
+				std::cout << "Ввод: ";
+				std::cin >> c;
+				std::cout << "\n\nПринято, введите любой символ для выхода: ";
+				std::cin >> flag4;
+				constants.push_back(c);
+			}
+		
+			if (flag2 == 3)
+			{
+				for (int i = 0; i <= 100; i += 1) {
+					std::cout << "\rЗагрузка: " << i << "%";
+					std::cout.flush();
+					if (i == 98 or i == 99)
+					{
+						std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+					}
+					else {
+
+						std::this_thread::sleep_for(std::chrono::milliseconds(10));
+					}
+					
+				}
+				short flag5;
+				system("cls");
+				std::cout << "Упрощенное выражение без добавления констант:\n";
+				Expression result(expression, type);
+				result.normalaize();
+				std::cout << result.getNormolizedExpression();
+				std::cout << "\n\nУпрощенное выражение с добавлением констант\n";
+				for (int i = 0; i < constants.size(); i++)
+				{
+					result.addConst(constants[i]);
+				}
+				std::cout << result.getNormolizedExpression();
+
+				std::cout << "\n\nДля прекращения работы программы введите '0', для возврата '1'\n";
+				std::cout << "Ввод: ";
+				std::cin >> flag5;
+				if (flag5 == 0)
+				{
+					break;
+				}
+			}
+		
+			if (flag2 == 4)
+			{
+				break;
+			}
+		}
+	}
+	else if (flag1 == 0)
+	{
+		std::cout << "\n\n";
+		std::cout << "Досвидания!\n";
+		return 0;
+	}
+	else
+	{
+		std::cout << "\n\n";
+		std::cout << "Неправильный ввод, аварийное завершение работы!!!";
+		return 0;
+	}
+
+
+	/*std::string a = "(x+5)(x-4)(x+7)(x-8)(x+9)";
 	std::string t = "Арифметическое";
 	Expression c(a, t);
 	c.normalaize();
 	c.addConst(20000);
-	std::cout << "Стандартный вид: " << c.getNormolizedExpression() << std::endl;
+	std::cout << "Стандартный вид: " << c.getNormolizedExpression() << std::endl;*/
 
 	return 0;
 }

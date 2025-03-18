@@ -271,7 +271,8 @@ public:
 	void showMenu() {
 		while (true) {
 			system("cls");
-			std::cout << "Окно редактирования:\n\n";
+			std::cout << "Окно редактирования\n\n";
+			std::cout << "Выберете один из пунктов и введите его цифру:\n\n";
 			std::cout << "1) Показать введенные данные\n";
 			std::cout << "2) Добавить константу\n";
 			std::cout << "3) Показать результат\n";
@@ -346,8 +347,18 @@ public:
 
 int main() {
 	setlocale(LC_ALL, "Russian");
-
-	std::cout << "Введите имя файла: ";
+	
+	for (int i = 0; i <= 100; i += 1) {
+		std::cout << "\rЗагрузка: " << i << "%";
+		std::cout.flush();
+		std::this_thread::sleep_for(std::chrono::milliseconds(8));
+	}
+	system("cls");
+	std::cout << "-Редактор выражений-\n\n";
+	std::cout << "Введите любой символ для продолжения...";
+	std::cin.get();
+	system("cls");
+	std::cout << "Введите имя файла(с расширением): ";
 	std::string filename;
 	std::cin >> filename;
 

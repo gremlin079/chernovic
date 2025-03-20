@@ -4,22 +4,24 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <QString>
+#include <Qdate>
 
 //
 struct Student
 {
-    std::string name;
-    std::map<std::string, short> marks;
+    QString name;
+    std::map<QDate, short> marks;
 };
 
 class Seminar
 {
 public:
-    std::string name;
+    QString name;
     std::vector<Student> students;
-    std::vector<std::string> dates;
+    std::vector<QDate> dates;
 public:
-    Seminar(std::string);
+    Seminar(QString);
 };
 
 
